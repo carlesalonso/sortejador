@@ -24,9 +24,9 @@ namespace WinFormsCancel
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
-            UInt32 nombre;
+            int nombre;
             if (String.IsNullOrWhiteSpace(textBox1.Text) || 
-                !UInt32.TryParse(textBox1.Text,out nombre) || nombre == 0)
+                !Int32.TryParse(textBox1.Text,out nombre) || nombre <= 0)
             {
                 MessageBox.Show("Cal entrar el nombre d'alumnes", "ERROR",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -34,7 +34,7 @@ namespace WinFormsCancel
                 textBox1.Select();
             }
             else
-                NombreAlumnes = (int)nombre;
+                NombreAlumnes = nombre;
 
         }
 
@@ -42,6 +42,8 @@ namespace WinFormsCancel
         {
             cancel = new CancellationTokenSource();
             var token = cancel.Token;
+            label1.Text = "GOOO!!";
+
             try
             {
                 button1.Enabled = false;
@@ -71,14 +73,21 @@ namespace WinFormsCancel
             
         }
 
+
+        // Calculate Random number using CryptoLibraries
+        // Discussion about this method and classics random methods
+        // see:
+        // https://stackoverflow.com/questions/2706500/how-do-i-generate-a-random-int-number
+
         private int CalculateRandomWinner()
         {
             var provider = new RNGCryptoServiceProvider();
             var byteArray = new byte[4];
             provider.GetBytes(byteArray);
 
-            //convert 4 bytes to an integer
+            //convert 4 bytes to an unsigned Integer
             var randomInteger = BitConverter.ToUInt32(byteArray, 0);
+            // Convert to int between 1 and NombreAlumnes
             return (int)(randomInteger % NombreAlumnes + 1);
 
         }
@@ -97,7 +106,7 @@ namespace WinFormsCancel
                 await Task.Delay(TimeSpan.FromSeconds(0.05));
                 circularProgressBar1.Value = i;
             }
-            await Task.Delay(700);
+            await Task.Delay(700); //ÑaaS per donar temps a que s'acabi el CircularProgressBar
         }
 
         
