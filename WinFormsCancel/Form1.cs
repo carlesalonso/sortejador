@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
@@ -23,6 +18,7 @@ namespace WinFormsCancel
             label1.Text = "";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             circularProgressBar1.Value = 100;
+            button2.Enabled = false;
             
         }
 
@@ -50,9 +46,10 @@ namespace WinFormsCancel
             {
                 button1.Enabled = false;
                 textBox1.Enabled = false;
+                button2.Enabled = true;
                 var winner = CalculateRandomWinner();
                 await StartCircleBar(token);
-                label1.Text = winner.ToString();
+                label1.Text = $"{winner}!!!";
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
             }
@@ -64,6 +61,7 @@ namespace WinFormsCancel
             {
                 circularProgressBar1.Value = 100;
                 button1.Enabled = true;
+                button2.Enabled = false;
                 textBox1.Enabled = true;
                 textBox1.ResetText();
                 label1.ResetText();
