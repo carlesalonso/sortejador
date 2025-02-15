@@ -79,7 +79,7 @@ namespace WinFormsCancel
         // see:
         // https://stackoverflow.com/questions/2706500/how-do-i-generate-a-random-int-number
 
-        private int CalculateRandomWinner()
+        public int CalculateRandomWinner()
         {
             var provider = new RNGCryptoServiceProvider();
             var byteArray = new byte[4];
